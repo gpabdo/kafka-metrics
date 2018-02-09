@@ -1,0 +1,27 @@
+---
+# tasks file for jmxtrans
+
+- name: Create the data directory
+  file:
+    path: /data/jmxtrans
+    state: directory
+    mode: 0777
+    recurse: yes
+
+- name: Render template
+  template:
+    src:  templates/kafka.json
+    dest: /data/jmxtrans/
+  notify:
+    - restart JmxTrans
+
+- name: Launch JmxTrans
+  docker_container:
+    image: jmxtrans/jmxtrans:latest
+    name: JmxTrans
+    network_mode: host
+    volumes:
+      - "/data/jmxtrans:/var/lib/jmxtrans:ro"
+    restart_policy: always
+    env:
+      SECONDS_BETWEEN_RUNS: 10

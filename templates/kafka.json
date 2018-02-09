@@ -1,0 +1,58 @@
+{
+  "servers" : [ {
+    "host" : "localhost",
+    "port" : "49999",
+    "queries" : [ {
+      "obj" : "kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec",
+      "attr" : [ "OneMinuteRate" ],
+      "resultAlias": "kafka.BytesInPerSec",
+      "outputWriters" : [ {
+        "@class" : "com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+        "url" : "http://127.0.0.1:8186/",
+        "username" : "admin",
+        "password" : "admin",
+        "database" : "jmxDB",
+        "tags"     : {"application" : "kafka"}
+        } ]
+      },
+      {
+      "obj" : "kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec",
+      "attr" : [ "OneMinuteRate" ],
+      "resultAlias": "kafka.BytesOutPerSec",
+      "outputWriters" : [ {
+        "@class" : "com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+        "url" : "http://127.0.0.1:8186/",
+        "username" : "admin",
+        "password" : "admin",
+        "database" : "jmxDB",
+        "tags"     : {"application" : "kafka"}
+        } ]
+      },
+      {
+      "obj" : "kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec",
+      "attr" : [ "OneMinuteRate" ],
+      "resultAlias": "kafka.BrokerTopicMetrics",
+      "outputWriters" : [ {
+        "@class" : "com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+        "url" : "http://127.0.0.1:8186/",
+        "username" : "admin",
+        "password" : "admin",
+        "database" : "jmxDB",
+        "tags"     : {"application" : "kafka"}
+        } ]
+      },
+      {
+      "obj" : "kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec,topic=*",
+      "attr" : [ "OneMinuteRate" ],
+      "resultAlias": "kafka.MessagesInPerSec.topic",
+      "outputWriters" : [ {
+        "@class" : "com.googlecode.jmxtrans.model.output.InfluxDbWriterFactory",
+        "url" : "http://127.0.0.1:8186/",
+        "username" : "admin",
+        "password" : "admin",
+        "database" : "jmxDB",
+        "tags"     : {"application" : "kafka"}
+        } ]
+      } ]
+    } ]
+}
